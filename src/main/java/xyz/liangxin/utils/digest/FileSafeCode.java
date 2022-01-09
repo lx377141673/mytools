@@ -36,10 +36,9 @@ public class FileSafeCode {
      * @param file 等待获取摘要的文件
      * @return 返回 摘要码, 如果文件不存在 返回 null
      * @throws IOException              文件操作异常
-     * @throws NoSuchAlgorithmException 摘要算法异常
      */
-    public static String getMD5(File file) throws IOException, NoSuchAlgorithmException {
-        return getAbstractCode("MD5", file);
+    public static String getMD5(File file) throws IOException {
+        return MD5Utils.md5(file);
     }
 
 

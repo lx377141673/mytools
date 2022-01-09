@@ -868,7 +868,7 @@ public class HttpClientUtils implements HttpUtilInterface {
         url = url.trim();
         final int sepIndex = url.indexOf("://");
         if (sepIndex < 0) {
-            url = "http://" + url;
+            url = HTTP+"://" + url;
         }
         return url;
     }

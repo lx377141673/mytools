@@ -1,13 +1,14 @@
 package xyz.liangxin.utils.core.text;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import xyz.liangxin.utils.constant.text.CharsetConstant;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.charset.UnsupportedCharsetException;
 
 /**
  * 字符集工具类
+ *
  * @author liangxin
  * @version V1.0
  * @Package xyz.liangxin.utils.core
@@ -15,8 +16,16 @@ import java.nio.charset.UnsupportedCharsetException;
  * @Description 字符集工具类
  */
 public class CharsetUtil extends CharsetConstant {
+    private static final Logger logger = LoggerFactory.getLogger(CharsetUtil.class);
 
-    private CharsetUtil(){}
+    private CharsetUtil() {
+    }
 
+    /**
+     * 显示当前系统支持的所有字符集信息
+     */
+    public static void showCharsetName() {
+        Charset.availableCharsets().keySet().forEach(System.out::println);
+    }
 
 }

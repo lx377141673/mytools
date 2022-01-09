@@ -92,4 +92,8 @@ public class CharConstant {
      * 字符常量:大于符号{@code '>'}
      */
     public static final char CH_GT = '>';
+    /**
+     * 字符常量:星号 / 乘法符号{@code '*'}
+     */
+    public static final char CH_MULTIPLY = '*';
 }

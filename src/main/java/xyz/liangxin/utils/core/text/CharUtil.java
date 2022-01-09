@@ -193,6 +193,16 @@ public class CharUtil extends CharConstant {
     }
 
     /**
+     * 字符 是否是中文
+     * 中文汉字的编码范围：[\u4e00-\u9fa5]
+     * @param ch 字符
+     * @return 是汉字(true), 不是汉字(false)
+     */
+    public static boolean isChinese(char ch){
+        return String.valueOf(ch).matches("[\u4e00-\u9fa5]");
+    }
+
+    /**
      * 字符转为字符串<br>
      *
      * @param c 字符

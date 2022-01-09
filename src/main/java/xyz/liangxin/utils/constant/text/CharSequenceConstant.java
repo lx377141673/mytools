@@ -113,6 +113,17 @@ public class CharSequenceConstant {
      * 字符串常量：艾特 {@code "@"}
      */
     public static final String STR_AT = "@";
+    /**
+     * 字符串常量：星号/乘法符号  {@code "*"}
+     */
+    public static final String STR_MULTIPLY = "*";
+
+    /**
+     * 字符串常量：UNKNOWN {@code "UNKNOWN"}
+     */
+    public static final String STR_UNKNOWN = "unknown";
+
+
 
     /**
      * 字符串常量：HTML 空格转义 {@code "&nbsp;" -> " "}
