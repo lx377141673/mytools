@@ -17,7 +17,8 @@ import java.util.function.Function;
  */
 public class ExecuteBuilder<T> {
 
-    private static Logger logger = LoggerFactory.getLogger(ExecuteBuilder.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExecuteBuilder.class);
+
 
     /**
      * 处理数据
@@ -45,19 +46,15 @@ public class ExecuteBuilder<T> {
      * @return 下一个处理器
      */
     public <R> ExecuteBuilder<R> next(Function<T, R> function) {
+        if (ObjectUtils.isNull(t)) {
+            return ExecuteBuilder.builder(null);
+        }
         R apply = null;
-        if (ObjectUtils.nonNull(t)) {
-            try {
-                apply = function.apply(t);
-            } catch (Exception e) {
-                if (showError) {
-                    logger.error(e.getMessage(), e);
-                    showError = false;
-                }
-            }
-        } else {
+        try {
+            apply = function.apply(t);
+        } catch (Exception e) {
             if (showError) {
-                logger.error("The value  is Null");
+                logger.error(e.getMessage(), e);
                 showError = false;
             }
         }

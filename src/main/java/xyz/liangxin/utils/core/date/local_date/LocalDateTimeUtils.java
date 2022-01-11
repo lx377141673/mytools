@@ -1,6 +1,7 @@
 package xyz.liangxin.utils.core.date.local_date;
 
 
+import xyz.liangxin.utils.constant.date.DateConstant;
 import xyz.liangxin.utils.constant.date.DateFormatEnum;
 import xyz.liangxin.utils.core.date.DateUtils;
 
@@ -45,23 +46,6 @@ public class LocalDateTimeUtils {
         return LocalDateTime.now();
     }
 
-    /**
-     * 当前时间的 日期信息
-     *
-     * @return 当前时间 日期信息
-     */
-    public static LocalDate date() {
-        return LocalDate.now();
-    }
-
-    /**
-     * 当前时间 , 时间信息
-     *
-     * @return 当前时间, 时间信息
-     */
-    public static LocalTime time() {
-        return LocalTime.now();
-    }
 
     /**
      * 将时间信息, 转换为 日期间信息
@@ -73,15 +57,6 @@ public class LocalDateTimeUtils {
         return LocalDateTime.ofInstant(date.toInstant(), DateUtils.getZoneId());
     }
 
-    /**
-     * 时间信息, 转换成  日期时间, 日期信息为 当前日期
-     *
-     * @param localTime 时间信息
-     * @return 日期时间
-     */
-    public static LocalDateTime of(LocalTime localTime) {
-        return localTime.atDate(LocalDate.now());
-    }
 
     /**
      * 日期信息, 转换成 日期时间, 时间信息 为 当前时间
@@ -95,14 +70,15 @@ public class LocalDateTimeUtils {
 
 
     /**
-     * 获取格式化模型对象
+     * 时间信息, 转换成  日期时间, 日期信息为 当前日期
      *
-     * @param dateFormatEnum 时间格式类型枚举
-     * @return 格式化模型对象
+     * @param localTime 时间信息
+     * @return 日期时间
      */
-    public static DateTimeFormatter getFormatters(DateFormatEnum dateFormatEnum) {
-        return DateTimeFormatter.ofPattern(dateFormatEnum.getValue());
+    public static LocalDateTime of(LocalTime localTime) {
+        return localTime.atDate(LocalDate.now());
     }
+
 
     /**
      * 将时间字符串 转换成 日期时间对象
@@ -177,18 +153,125 @@ public class LocalDateTimeUtils {
         return localDateTime.toLocalTime();
     }
 
-
     /**
-     * 获取两个时间的相隔天数
+     * 获取格式化模型对象
      *
-     * @param startDate 开始时间
-     * @param endDate   结束时间
-     * @return 返回两个时间之间相隔的天数
+     * @param dateFormatEnum 时间格式类型枚举
+     * @return 格式化模型对象
      */
-    public static long getDaysDifference(LocalDateTime startDate, LocalDateTime endDate) {
-        return toLocalDate(endDate).toEpochDay() - toLocalDate(startDate).toEpochDay();
+    public static DateTimeFormatter getFormatters(DateFormatEnum dateFormatEnum) {
+        return DateTimeFormatter.ofPattern(dateFormatEnum.getValue());
     }
 
+//---------------------------------------- 计算 相差时间 --------------------------
+    /**
+     * 获取两个时间的相差 秒数
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 返回两个时间之间相差的 秒数
+     */
+    public static int getSecondDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        LocalDateTime d1 = after(dateTime1, dateTime2);
+        LocalDateTime d2 = before(dateTime1, dateTime2);
+        int dayDifference = LocalDateUtils.getDayDifference(d1.toLocalDate(), d2.toLocalDate());
+        return dayDifference * DateConstant.DAY_TO_SECOND + d1.toLocalTime().toSecondOfDay() - d2.toLocalTime().toSecondOfDay();
+    }
+
+    /**
+     * 获取两个时间的相差 分钟数
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 返回两个时间之间相差的 分钟数
+     */
+    public static int getMinuteDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        return getSecondDifference(dateTime1, dateTime2) / DateConstant.MINUTE_TO_SECOND;
+    }
+
+    /**
+     * 获取两个时间的相差 小时数
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 返回两个时间之间相差的 小时数
+     */
+    public static int getHourDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        return getMinuteDifference(dateTime1, dateTime2) / DateConstant.HOUR_TO_MINUTE;
+    }
+
+    /**
+     * 获取两个时间的相差 天数
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 返回两个时间之间相差的 天数
+     */
+    public static int getDayDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        return getHourDifference(dateTime1, dateTime2) / DateConstant.DAY_TO_HOUR;
+    }
+
+    /**
+     * 获取两个时间的相差 周数
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 返回两个时间之间相差的 周数
+     */
+    public static int getWeekDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        return getDayDifference(dateTime1, dateTime2) / DateConstant.WEEK_TO_DAY;
+    }
+
+    /**
+     * 获取两个时间的相差月数
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 返回两个时间之间相差的 月数
+     */
+    public static int getMonthDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        LocalDateTime d1 = after(dateTime1, dateTime2);
+        LocalDateTime d2 = before(dateTime1, dateTime2);
+        int monthDifference = LocalDateUtils.getMonthDifference(d1.toLocalDate(), d2.toLocalDate());
+        if (d1.toLocalTime().toSecondOfDay() - d2.toLocalTime().toSecondOfDay() < 0) {
+            monthDifference--;
+        }
+        return monthDifference;
+    }
+
+    /**
+     * 获取两个时间的相差 年数
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 返回两个时间之间相差的 年数
+     */
+    public static int getYearDifference(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        return getMonthDifference(dateTime1, dateTime2) / DateConstant.YEAR_TO_MONTH;
+    }
+
+
+    /**
+     * 获取两个时间中, 更晚的时间
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 更晚的时间
+     */
+    public static LocalDateTime after(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        return dateTime1.isAfter(dateTime2) ? dateTime1 : dateTime2;
+    }
+
+    /**
+     * 获取两个时间中,更早的时间
+     *
+     * @param dateTime1 时间1
+     * @param dateTime2 时间2
+     * @return 更早的时间
+     */
+    public static LocalDateTime before(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        return dateTime1.isBefore(dateTime2) ? dateTime1 : dateTime2;
+    }
 
 }
 

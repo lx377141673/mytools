@@ -133,6 +133,25 @@ public class CalculateUtils {
         return calculation(NumberUtils.toBigDecimal(num1), NumberUtils.toBigDecimal(num2), operators, precision).doubleValue();
     }
 
+
+    /**
+     * 整数运算
+     *
+     * @param num1      数值1
+     * @param num2      数值2
+     * @param operators {@link OperatorsEnum} 运算符号
+     *                  <p>
+     *                  {@link OperatorsEnum#ADD} : 加号
+     *                  {@link OperatorsEnum#SUBTRACT} : 减号
+     *                  {@link OperatorsEnum#MULTIPLY} : 乘号
+     *                  {@link OperatorsEnum#DIVIDE} : 除号
+     *                  </p>
+     * @return 两数运算的结果值 (整数)
+     */
+    public static int calculation(int num1,int num2,OperatorsEnum operators){
+        return calculation(NumberUtils.toBigDecimal(num1), NumberUtils.toBigDecimal(num2), operators, null).intValue();
+    }
+
     /**
      * 数字运算 不丢失精度 自动对所有数值类型进行转换 成 Double 不存在精度损耗
      *
@@ -168,6 +187,7 @@ public class CalculateUtils {
     public static double calculation(double num1, OperatorsEnum operators, double num2) {
         return calculation(num1, num2, operators);
     }
+
 
     /**
      * 加法

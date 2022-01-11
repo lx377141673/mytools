@@ -1,6 +1,7 @@
 package xyz.liangxin.utils.core.date.local_date;
 
 
+import xyz.liangxin.utils.constant.date.DateConstant;
 import xyz.liangxin.utils.constant.date.DateFormatEnum;
 import xyz.liangxin.utils.core.date.DateUtils;
 
@@ -78,7 +79,6 @@ public class LocalTimeUtils {
         return LocalTime.parse(time, LocalDateTimeUtils.getFormatters(DateFormatEnum.of(formatter)));
     }
 
-
     /**
      * 根据各部分时间信息, 创建时间信息对象
      *
@@ -90,9 +90,9 @@ public class LocalTimeUtils {
      */
     public static LocalTime of(int hour, int minute, int second, int ms) {
         // 00:00:00
-        return LocalTime.of(hour, minute, second, ms);
-
+        return LocalTime.of(hour, minute, second, ms * DateConstant.MS_TO_NANO);
     }
+
 
     /**
      * 根据各部分时间信息, 创建时间信息对象
@@ -104,7 +104,7 @@ public class LocalTimeUtils {
      */
     public static LocalTime of(int hour, int minute, int second) {
         // 00:00:00
-        return LocalTimeUtils.of(hour, minute, second, 0);
+        return LocalTime.of(hour, minute, second);
 
     }
 
@@ -119,5 +119,158 @@ public class LocalTimeUtils {
         return DateUtils.of(LocalDateTimeUtils.toInstant(LocalDateTimeUtils.of(localTime)));
     }
 
+    /**
+     * 获取 当前时间所在天的 纳秒总数
+     *
+     * @param time 时间
+     * @return 当天的 纳秒总数
+     */
+    public static long toNanoOfDay(LocalTime time) {
+        return time.toNanoOfDay();
+    }
 
+    /**
+     * 获取 当前时间所在天的 毫秒总数
+     *
+     * @param time 时间
+     * @return 当天的 毫秒总数
+     */
+    public static int toMsOfDay(LocalTime time) {
+        return Math.toIntExact(toNanoOfDay(time) / DateConstant.MS_TO_NANO);
+    }
+
+    /**
+     * 获取 当前时间所在天的 秒总数
+     *
+     * @param time 时间
+     * @return 当天的 秒总数
+     */
+    public static int toSecondOfDay(LocalTime time) {
+        return time.toSecondOfDay();
+    }
+
+    /**
+     * 获取 当前时间所在天的 分钟总数
+     *
+     * @param time 时间
+     * @return 当天的 分钟总数
+     */
+    public static int toMinuteOfDay(LocalTime time) {
+        return time.toSecondOfDay() / DateConstant.MINUTE_TO_SECOND;
+    }
+
+    /**
+     * 获取 当前时间所在天的 小时总数
+     *
+     * @param time 时间
+     * @return 当天的 小时总数
+     */
+    public static int toHourOfDay(LocalTime time) {
+        return time.getHour();
+    }
+
+    /**
+     * 获取时间的毫秒部分, 与 获取时间的 纳秒部分有冲突,
+     * 不可同时使用, 或者需要处理后, 使用
+     *
+     * @param time 时间
+     * @return 毫秒部分
+     */
+    public static int getMs(LocalTime time) {
+        return time.getNano() / DateConstant.MS_TO_NANO;
+    }
+
+
+    /**
+     * 获取两个时间中, 更靠后的时间
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 更靠后的时间
+     */
+    public static LocalTime after(LocalTime time1, LocalTime time2) {
+        return time1.isAfter(time2) ? time1 : time2;
+    }
+
+    /**
+     * 获取两个时间中, 更靠前的时间
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 更靠前的时间
+     */
+    public static LocalTime before(LocalTime time1, LocalTime time2) {
+        return time1.isBefore(time2) ? time1 : time2;
+    }
+
+    //----------------------------------- 计算时间差 ---------------------------
+
+    /**
+     * 获取两个时间 相差的 纳秒数
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 相差的 纳秒数
+     */
+    public static long getNanoDifference(LocalTime time1, LocalTime time2) {
+        return after(time1, time2).toNanoOfDay() - before(time1, time2).toNanoOfDay();
+    }
+
+    /**
+     * 获取两个时间 相差的 毫秒数
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 相差的 毫秒数
+     */
+    public static int getMsDifference(LocalTime time1, LocalTime time2) {
+        return Math.toIntExact(getNanoDifference(time1, time2) / DateConstant.MS_TO_NANO);
+    }
+
+    /**
+     * 获取两个时间 相差的 秒数
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 相差的 秒数
+     */
+    public static int getSecondDifference(LocalTime time1, LocalTime time2) {
+        return getMsDifference(time1, time2) / DateConstant.SECOND_TO_MS;
+    }
+
+    /**
+     * 获取两个时间 相差的 分钟数
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 相差的 分钟数
+     */
+    public static int getMinuteDifference(LocalTime time1, LocalTime time2) {
+        return getSecondDifference(time1, time2) / DateConstant.MINUTE_TO_SECOND;
+    }
+
+
+    /**
+     * 获取两个时间 相差的 小时数
+     *
+     * @param time1 时间1
+     * @param time2 时间2
+     * @return 相差的 小时数
+     */
+    public static int getHourDifference(LocalTime time1, LocalTime time2) {
+        return getMinuteDifference(time1, time2) / DateConstant.HOUR_TO_MINUTE;
+    }
+
+    /**
+     * 判断当前是否是 整点 0分0秒
+     *
+     * @param time 时间
+     * @return 当前整点数, 如果不是返回 -1;
+     */
+    public static int isChimeHourlyChime(LocalTime time) {
+        if (time.getMinute() == 0 && time.getSecond() == 0) {
+            return time.getHour();
+        }
+        return -1;
+    }
 }

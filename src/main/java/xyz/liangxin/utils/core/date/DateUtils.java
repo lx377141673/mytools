@@ -8,7 +8,7 @@ import xyz.liangxin.utils.constant.date.DateUnit;
 import xyz.liangxin.utils.core.date.local_date.LocalDateTimeUtils;
 import xyz.liangxin.utils.core.date.local_date.LocalDateUtils;
 import xyz.liangxin.utils.core.date.local_date.LocalTimeUtils;
-import xyz.liangxin.utils.core.number.NumberUtils;
+import xyz.liangxin.utils.core.number.CalculateUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -64,23 +64,7 @@ public class DateUtils extends DateConstant {
         return toString(now());
     }
 
-    /**
-     * 获取本系统 时区
-     *
-     * @return 时区对象
-     */
-    public static ZoneId getZoneId() {
-        return getTimeZone().toZoneId();
-    }
 
-    /**
-     * 获取本系统 时区
-     *
-     * @return 时区对象
-     */
-    public static TimeZone getTimeZone() {
-        return TimeZone.getDefault();
-    }
 
 
     /**
@@ -193,6 +177,24 @@ public class DateUtils extends DateConstant {
         return getDateInfo(date, CalendarUnitEnum.MILLISECOND);
     }
 
+    /**
+     * 获取本系统 时区
+     *
+     * @return 时区对象
+     */
+    public static ZoneId getZoneId() {
+        return getTimeZone().toZoneId();
+    }
+
+    /**
+     * 获取本系统 时区
+     *
+     * @return 时区对象
+     */
+    public static TimeZone getTimeZone() {
+        return TimeZone.getDefault();
+    }
+
 //#################################################################################################获取时间信息_部分 [结束]##############################################################################################################################################################################################################################################################################
 //#############################################################################################################################################################################################################################################################################################################################################################################################
 
@@ -217,8 +219,8 @@ public class DateUtils extends DateConstant {
      * @return 时间格式化对象
      */
     public static SimpleDateFormat getDateFormat(DateFormatEnum dateFormat) {
-        Objects.requireNonNull(dateFormat,"时间格式 不允许为null");
-        return new SimpleDateFormat(dateFormat.value());
+        Objects.requireNonNull(dateFormat, "时间格式 不允许为null");
+        return getDateFormat(dateFormat.value());
     }
 
 
@@ -274,7 +276,8 @@ public class DateUtils extends DateConstant {
 
     /**
      * 将指定瞬时时间, 转换为 Date 对象
-     * @param instant  瞬时时间
+     *
+     * @param instant 瞬时时间
      * @return 时间对象
      */
     public static Date of(Instant instant) {
@@ -283,6 +286,7 @@ public class DateUtils extends DateConstant {
 
     /**
      * 将日历时间对象 转换为 Date 对象
+     *
      * @param localDateTime 日历时间对象
      * @return 时间对象
      */
@@ -292,11 +296,12 @@ public class DateUtils extends DateConstant {
 
     /**
      * 将日历日期对象 转换为 Date 对象
+     *
      * @param localDate 日历日期对象
      * @return 时间对象
      */
     public static Date of(LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay().atZone(DateUtils.getZoneId()).toInstant());
+        return DateUtils.of(localDate.atStartOfDay().atZone(DateUtils.getZoneId()).toInstant());
     }
 
     /**
@@ -407,6 +412,26 @@ public class DateUtils extends DateConstant {
         return dateFormat.parse(dateFormat.format(date));
     }
 
+    /**
+     * 两个时间 比大小 时间越往后越大 两数相等也等于 false
+     * 时间1 是否在 时间2 之后
+     *
+     * @param date1 时间对象1
+     * @param date2 时间对象2
+     * @return 时间1 是否在 时间2 之后
+     */
+    public static boolean isAfter(Date date1, Date date2) {
+        /*
+            // date1 是否在 date2 之前 返回 true || false  相等也返回 false
+            date1.before(date2);
+            // date1 是否在date2之后,返回 true || false     相等也返回 false
+            date1.after(date2);
+            // date1 == date2 返回值为 0 ; date1 在 date2 之后 返回值小于0 ; 如果 date1 在 date2 之前 返回值 大于0;
+            date1.compareTo(date2);
+         */
+        return date1.after(date2);
+    }
+
 
 //################################################################################## 时间信息处理_部分 [结束]####################################################################################################################################################################################################################################################################################
 //#############################################################################################################################################################################################################################################################################################################################################################################################
@@ -417,20 +442,24 @@ public class DateUtils extends DateConstant {
 
 
     /**
-     * 两个时间 比大小 时间越往后越大 两数相等也等于 false
-     * 时间1 是否在 时间2 之后
-     * @param date1 时间对象1
-     * @param date2 时间对象2
-     * @return  时间1 是否在 时间2 之后
+     * 获取两个时间之间 更晚的时间
+     * @param date1 时间1
+     * @param date2 时间2
+     * @return 更晚的时间
      */
-    public static boolean isAfter(Date date1, Date date2) {
-        // date1.before(date2); // date1 是否在 date2 之前 返回 true || false  相等也返回 false
-        // date1.after(date2); // date1 是否在date2之后,返回 true || false     相等也返回 false
-        // date1.compareTo(date2); // date1 是否大于 date2   date1小于date2返回-1，date1大于date2返回1，相等返回0
-        // date1.compareTo(date2); // date1 是否在 date2 之后  date1 在date2之前返回 -1 date1在date2之后返回1 date1=date2 返回 0
-        return date1.after(date2);
+    public static Date after(Date date1,Date date2){
+        return date1.after(date2) ? date1 : date2;
     }
 
+    /**
+     * 获取两个时间之间 更早的时间
+     * @param date1 时间1
+     * @param date2 时间2
+     * @return 更早的时间
+     */
+    public static Date before(Date date1,Date date2){
+        return date1.before(date2) ? date1 : date2;
+    }
 
 
     //    相差天数 和 相隔天数的区别
@@ -445,20 +474,18 @@ public class DateUtils extends DateConstant {
      * @param endDate   结束时间
      * @param dateUnit  {@link DateUnit}
      *                  <p>
-     *                  {@link DateUnit#MS}: 毫秒
-     *                  {@link DateUnit#SECOND}: 秒
-     *                  {@link DateUnit#MINUTE}: 分钟
-     *                  {@link DateUnit#HOUR}: 小时
-     *                  {@link DateUnit#DAY}: 天数
-     *                  {@link DateUnit#WEEK}: 星期
+     *                  <li> {@link DateUnit#MS}: 毫秒</li>
+     *                  <li>{@link DateUnit#SECOND}: 秒</li>
+     *                  <li>{@link DateUnit#MINUTE}: 分钟</li>
+     *                  <li>{@link DateUnit#HOUR}: 小时</li>
+     *                  <li>{@link DateUnit#DAY}: 天数</li>
+     *                  <li>{@link DateUnit#WEEK}: 星期</li>
      *                  </p>
      * @return 相差的时间 (保留两位小数)
      */
     public static double getBetweenTime(Date startDate, Date endDate, DateUnit dateUnit) {
-        double result;
-        double betweenTime = isAfter(endDate, startDate) ? endDate.getTime() - startDate.getTime() + 0.0D : startDate.getTime() - endDate.getTime() + 0.0D;
-        result = NumberUtils.divide(betweenTime, dateUnit.getMillis());
-        return result;
+        double betweenTime = isAfter(endDate, startDate) ? endDate.getTime() - startDate.getTime() : startDate.getTime() - endDate.getTime();
+        return CalculateUtils.divide(betweenTime, dateUnit.getMillis());
     }
 
 
@@ -473,7 +500,6 @@ public class DateUtils extends DateConstant {
         return (int) getBetweenTime(startDate, endDate, DateUnit.DAY);
     }
 
-
     /**
      * 获取两个时间的相隔天数
      *
@@ -485,6 +511,7 @@ public class DateUtils extends DateConstant {
         startDate = formatDate(startDate, DateFormatEnum.YEAR_TO_DAY);
         endDate = formatDate(endDate, DateFormatEnum.YEAR_TO_DAY);
         return getDaysDifference(startDate, endDate);
+//        return LocalDateUtils.getDayDifference(LocalDateUtils.of(startDate), LocalDateUtils.of(endDate));
     }
 
 

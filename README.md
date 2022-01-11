@@ -107,6 +107,10 @@
 
 `StringUtils`: 字符串工具类
 
+`SensitiveWordFilter`:  敏感词过滤器
+
+`ChineseNumber`: 数字 中文大写转换
+
 ## 数据库包
 
 > xyz.liangxin.utils.database
@@ -129,9 +133,20 @@
 
 `PassWordEncoder`:  密码加密工具类 【 Brypt 算法】
 
+`Base64`: Base64 编码
+
 ## IO 包
 
 > xyz.liangxin.utils.io
+
+`BytesEncodingDetect`: 字节编码查询
+
+`EncodingDetect`: 获取文件字节编码
+
+`FileUtils`: 文件操作工具类
+
+`IOUtils`: 文件 IO 操作工具类
+
 
 ## JSON 包
 
@@ -169,6 +184,8 @@
 
 
 `WebUtils`:  WEB 操作分析工具类
+
+`CookieUtils`: WebUtils 中 ,拆分 Cookie操作
 
 ### HTTP网络连接工具包
 

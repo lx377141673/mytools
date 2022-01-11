@@ -6,7 +6,7 @@
 
     <groupId>xyz.liangxin.utils</groupId>
     <artifactId>project-utils</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>【项目工具包】project-utils</name>
@@ -57,8 +57,9 @@
             <version>4.5.13</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
+
         <!-- 用于 httpclient 上传 文件 -->
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
@@ -70,7 +71,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.8.0</version>
+            <version>20030203.000550</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
         <dependency>
@@ -94,7 +95,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.35</version>
+            <version>1.2.79</version>
         </dependency>
 
         <!-- json工具: Jackson -->
@@ -117,7 +118,7 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!--    引入XML功能    /-->
+        <!--    引入XML功能 -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
@@ -159,7 +160,7 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.13.1</version>
+            <version>1.14.3</version>
         </dependency>
 
 
