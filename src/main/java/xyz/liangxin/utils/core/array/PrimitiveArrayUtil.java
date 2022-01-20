@@ -1,5 +1,6 @@
 package xyz.liangxin.utils.core.array;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /**
@@ -197,6 +198,8 @@ public class PrimitiveArrayUtil {
         if (isEmpty(array)) {
             return new long[0];
         }
+
+
         if (cover) {
             for (int i = 0; i < array.length / 2; i++) {
                 long temp = array[i];
@@ -440,5 +443,238 @@ public class PrimitiveArrayUtil {
     public static boolean[] reverse(boolean[] array) {
         return reverse(array, false);
     }
+
+
+    // --------------------------------------------- 数组复制 copy()
+
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static byte[] copy(byte[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 new byte[0]</p>
+     *
+     * @param original 要复制的数组
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static byte[] copy(byte[] original) {
+        if (isEmpty(original)) {
+            return new byte[0];
+        }
+        return copy(original, original.length);
+    }
+
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static short[] copy(short[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 new short[0]</p>
+     *
+     * @param original 要复制的数组
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static short[] copy(short[] original) {
+        if (isEmpty(original)) {
+            return new short[0];
+        }
+        return copy(original, original.length);
+    }
+
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static int[] copy(int[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 new int[0]</p>
+     *
+     * @param original 要复制的数组
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static int[] copy(int[] original) {
+        if (isEmpty(original)) {
+            return new int[0];
+        }
+        return copy(original, original.length);
+    }
+
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static long[] copy(long[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 new long[0]</p>
+     *
+     * @param original 要复制的数组
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static long[] copy(long[] original) {
+        if (isEmpty(original)) {
+            return new long[0];
+        }
+        return copy(original, original.length);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static float[] copy(float[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 new float[0]</p>
+     *
+     * @param original 要复制的数组
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static float[] copy(float[] original) {
+        if (isEmpty(original)) {
+            return new float[0];
+        }
+        return copy(original, original.length);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static double[] copy(double[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 new double[0]</p>
+     *
+     * @param original 要复制的数组
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static double[] copy(double[] original) {
+        if (isEmpty(original)) {
+            return new double[0];
+        }
+        return copy(original, original.length);
+    }
+
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static boolean[] copy(boolean[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 new boolean[0]</p>
+     *
+     * @param original 要复制的数组
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static boolean[] copy(boolean[] original) {
+        if (isEmpty(original)) {
+            return new boolean[0];
+        }
+        return copy(original, original.length);
+    }
+
 
 }

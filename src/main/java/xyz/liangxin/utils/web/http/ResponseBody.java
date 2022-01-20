@@ -39,29 +39,29 @@ public class ResponseBody {
     /**
      * 响应是否成功
      */
-    private boolean isOk;
+    private boolean success;
 
-    ResponseBody(String body, int statusCode) {
+    public ResponseBody(String body, int statusCode) {
         this.body = body;
         this.statusCode = statusCode;
-        this.isOk = statusCode == 200;
+        this.success = statusCode == 200;
     }
 
-    ResponseBody(String body, Map<String, List<String>> headerMap, Map<String, String> cookieMap, Locale locale, int statusCode) {
+    public ResponseBody(String body, Map<String, List<String>> headerMap, Map<String, String> cookieMap, Locale locale, int statusCode) {
         this.body = body;
         this.headerMap = headerMap;
         this.cookieMap = cookieMap;
         this.locale = locale;
         this.statusCode = statusCode;
-        this.isOk = statusCode == 200;
+        this.success = statusCode == 200;
     }
 
-    ResponseBody(String body, Map<String, List<String>> headerMap, Map<String, String> cookieMap, int statusCode) {
+    public ResponseBody(String body, Map<String, List<String>> headerMap, Map<String, String> cookieMap, int statusCode) {
         this.body = body;
         this.headerMap = headerMap;
         this.cookieMap = cookieMap;
         this.statusCode = statusCode;
-        this.isOk = statusCode == 200;
+        this.success = statusCode == 200;
     }
 
     public String getBody() {
@@ -133,12 +133,12 @@ public class ResponseBody {
         this.statusCode = statusCode;
     }
 
-    public boolean isOk() {
-        return isOk;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setOk(boolean ok) {
-        isOk = ok;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     @Override
@@ -149,7 +149,7 @@ public class ResponseBody {
                 ", cookieMap=" + cookieMap +
                 ", locale=" + locale +
                 ", statusCode=" + statusCode +
-                ", isOk=" + isOk +
+                ", success=" + success +
                 '}';
     }
 }

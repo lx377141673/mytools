@@ -13,7 +13,7 @@ import xyz.liangxin.utils.constant.text.CharConstant;
  * @date 2021/11/7 18:40
  * @Description 操作字符串的各种工具函数
  */
-public class StringUtils  extends CharSequenceUtil {
+public class StringUtils extends CharSequenceUtil {
 
 
     private static final Logger logger = LoggerFactory.getLogger(StringUtils.class);
@@ -141,6 +141,21 @@ public class StringUtils  extends CharSequenceUtil {
         return false;
     }
 
+
+    /**
+     * <p>检查指定的对象引用是否不为 Empty ( null || 空字符串 ) ，如果是则抛出自定义的 {@link NullPointerException} 。</p>
+     * <p>该方法主要用于在具有多个参数的方法和构造函数中进行参数验证</p>
+     *
+     * @param str     检查无效性的字符串 引用
+     * @param message 抛出 {@link NullPointerException} 使用的详细消息
+     * @return str 如果不为 Empty
+     */
+    public static String requireNonEmpty(String str, String message) {
+        if (isEmpty(str)) {
+            throw new NullPointerException(message);
+        }
+        return str;
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package xyz.liangxin.utils.core.text;
 
+import xyz.liangxin.utils.constant.text.CharConstant;
 import xyz.liangxin.utils.constant.text.CharSequenceConstant;
 import xyz.liangxin.utils.core.array.ArrayUtil;
 
@@ -13,7 +14,6 @@ import xyz.liangxin.utils.core.array.ArrayUtil;
  * @Description {@link CharSequence} 相关工具类封装
  */
 public class CharSequenceUtil extends CharSequenceConstant {
-
 
 
     // ------------------------------------------------------------------------ isBlank
@@ -54,7 +54,7 @@ public class CharSequenceUtil extends CharSequenceConstant {
             return true;
         }
         for (int i = 0; i < length; i++) {
-            if (Boolean.FALSE == CharUtil.isBlankChar(str.charAt(i))) {
+            if (CharUtil.isBlankChar(str.charAt(i))) {
                 return false;
             }
         }
@@ -217,6 +217,7 @@ public class CharSequenceUtil extends CharSequenceConstant {
      * <ul>
      *     <li>{@code StrUtil.isEmpty(null)     // true}</li>
      *     <li>{@code StrUtil.isEmpty("")       // true}</li>
+     *     <li>{@code StrUtil.isEmpty(" ")       // false}</li>
      *     <li>{@code StrUtil.isEmpty(" \t\n")  // false}</li>
      *     <li>{@code StrUtil.isEmpty("abc")    // false}</li>
      * </ul>
@@ -247,6 +248,7 @@ public class CharSequenceUtil extends CharSequenceConstant {
      * <ul>
      *     <li>{@code StrUtil.isNotEmpty(null)     // false}</li>
      *     <li>{@code StrUtil.isNotEmpty("")       // false}</li>
+     *     <li>{@code StrUtil.isNotEmpty(" ")       // true}</li>
      *     <li>{@code StrUtil.isNotEmpty(" \t\n")  // true}</li>
      *     <li>{@code StrUtil.isNotEmpty("abc")    // true}</li>
      * </ul>
@@ -259,8 +261,66 @@ public class CharSequenceUtil extends CharSequenceConstant {
      * @see #isEmpty(CharSequence)
      */
     public static boolean isNotEmpty(CharSequence str) {
-        return Boolean.FALSE == isEmpty(str);
+        return !isEmpty(str);
     }
+
+
+    /**
+     * 字符串 去除首尾空格后, 是否为空白
+     * <p>字符串是否为空，空的定义如下：</p>
+     * <ol>
+     *     <li>{@code null}</li>
+     *     <li>空字符串：{@code ""}</li>
+     *     <li>空字符串：{@code " "}</li>
+     * </ol>
+     *
+     * <p>例：</p>
+     * <ul>
+     *     <li>{@code StrUtil.isEmpty(null)     // true}</li>
+     *     <li>{@code StrUtil.isEmpty("")       // true}</li>
+     *     <li>{@code StrUtil.isEmpty(" ")       // true}</li>
+     *     <li>{@code StrUtil.isEmpty(" \t\n")  // false}</li>
+     *     <li>{@code StrUtil.isEmpty("abc")    // false}</li>
+     * </ul>
+     *
+     * <p>注意：该方法与 {@link #isNotBlank(CharSequence)} 的区别是：该方法不校验空白字符。</p>
+     * <p>建议：该方法建议用于工具类或任何可以预期的方法参数的校验中。</p>
+     *
+     * @param str 被检测的字符串
+     * @return 去除首尾空格后 是否为 空白
+     */
+    public static boolean trimIsEmpty(CharSequence str) {
+        return str != null && str.toString().trim().length() == 0;
+    }
+
+
+    /**
+     * 字符串 去除首尾空格后, 是否为 非空白
+     * <p>字符串是否为非空白，非空白的定义如下： </p>
+     * <ol>
+     *     <li>不为 {@code null}</li>
+     *     <li>不为空字符串：{@code ""}</li>
+     *     <li>不为空字符串：{@code " "}</li>
+     * </ol>
+     *
+     * <p>例：</p>
+     * <ul>
+     *     <li>{@code StrUtil.isNotEmpty(null)     // false}</li>
+     *     <li>{@code StrUtil.isNotEmpty("")       // false}</li>
+     *     <li>{@code StrUtil.isNotEmpty(" ")       // false}</li>
+     *     <li>{@code StrUtil.isNotEmpty(" \t\n")  // true}</li>
+     *     <li>{@code StrUtil.isNotEmpty("abc")    // true}</li>
+     * </ul>
+     * <p>注意：该方法与 {@link #isNotEmpty(CharSequence)} 的区别是：该方法不校验空白字符。</p>
+     * <p>建议：该方法建议用于工具类或任何可以预期的方法参数的校验中。</p>
+     *
+     * @param str 被检测的字符串
+     * @return 去除首尾空格后 是否为 非空白
+     */
+    public static boolean trimIsNotEmpty(CharSequence str) {
+        return !trimIsEmpty(str);
+    }
+
 
     /**
      * 当给定字符串为null时，转换为Empty
@@ -914,14 +974,14 @@ public class CharSequenceUtil extends CharSequenceConstant {
         if (null == name) {
             return null;
         }
-        if (contains(name, CharUtil.CH_UNDERLINE)) {
+        if (contains(name, CharConstant.CH_UNDERLINE)) {
             final int length = name.length();
             final StringBuilder sb = new StringBuilder(length);
             boolean upperCase = false;
             for (int i = 0; i < length; i++) {
                 char c = name.charAt(i);
 
-                if (c == CharUtil.CH_UNDERLINE) {
+                if (c == CharConstant.CH_UNDERLINE) {
                     upperCase = true;
                 } else if (upperCase) {
                     sb.append(Character.toUpperCase(c));
@@ -934,5 +994,22 @@ public class CharSequenceUtil extends CharSequenceConstant {
         } else {
             return name;
         }
+    }
+
+    /**
+     * 将单词 转换成 首字母 大写的 单词
+     * <p> 如果 word 为 Empty 则返回本身</p>
+     *
+     * @param word 单词
+     * @return 首字母大写的单词
+     */
+    public static String convertUppercase(String word) {
+        if (isEmpty(word)) {
+            return word;
+        }
+        if (word.length() < 2) {
+            return word.toUpperCase();
+        }
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 }

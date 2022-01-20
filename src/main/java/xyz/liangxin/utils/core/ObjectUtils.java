@@ -1,19 +1,25 @@
 package xyz.liangxin.utils.core;
 
+import xyz.liangxin.utils.core.array.ArrayUtil;
 import xyz.liangxin.utils.core.text.StringUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Object 工具类
@@ -222,57 +228,171 @@ public class ObjectUtils {
     }
 
 
+    //------------------------------------ getNext
+
+
     /**
-     * 如果为null 则返回默认值
+     * 断定是否执行下一步操作,
+     * <li>如果断定失败, 则返回 defaultValue</li>
+     * <li>断定成功 , 返回 next.apply(object)</li>
      *
-     * @param object       原值
+     * @param object       操作值
      * @param defaultValue 默认值
-     * @param <T>          值类型
-     * @return 判断后的值
+     * @param next         操作函数
+     * @param predicate    断定条件
+     * @param <T>          操作值类型
+     * @param <R>          返回值类型
+     * @return 断定后的处理结果
+     * <li>如果断定失败, 则返回 defaultValue</li>
+     * <li>断定成功 , 返回 next.apply(object)</li>
      */
-    public static <T> T getOrDefault(T object, T defaultValue) {
-        return nonNull(object) ? object : defaultValue;
+    public static <T, R> R getNext(T object, R defaultValue, Function<T, R> next, Predicate<T> predicate) {
+        return predicate.test(object) ? next.apply(object) : defaultValue;
+    }
+
+
+    /**
+     * 根据是否为 null, 判断是否执行下一步操作,并获得结果,
+     * <li>如果断定失败, 则返回 defaultValue </li>
+     * <li>断定成功 , 返回 next.apply(object)</li>
+     * <p> 等价于 {@code getNext(object, defaultValue, next, ObjectUtils::nonNull)}</p>
+     *
+     * @param object       操作值
+     * @param next         操作函数
+     * @param defaultValue 默认值
+     * @param <T>          操作值类型
+     * @param <R>          返回值类型
+     * @return 断定后的处理结果
+     * <li>如果断定失败, 则返回 defaultValue</li>
+     * <li>断定成功 , 返回 next.apply(object)</li>
+     */
+    public static <T, R> R getNext(T object, Function<T, R> next, R defaultValue) {
+        return getNext(object, defaultValue, next, ObjectUtils::nonNull);
+    }
+
+
+    /**
+     * 根据 操作值是否不为 null , 判断是否 执行下一步操作,
+     * <li>如果操作值null, 则返回 null </li>
+     * <li>如果操作值 不为 null , 返回 next.apply(object)</li>
+     * <p> 等价于 {@code getNext(object, null, next, ObjectUtils::nonNull)}</p>
+     * <p> 等价于 {@code getNext(object, next, ObjectUtils::nonNull)}</p>
+     *
+     * @param object 操作值
+     * @param next   操作函数
+     * @param <T>    操作值类型
+     * @param <R>    返回值类型
+     * @return 断定后的处理结果
+     * <li>如果断定失败, 则返回 null</li>
+     * <li>断定成功 , 返回 next.apply(object)</li>
+     */
+    public static <T, R> R getNext(T object, Function<T, R> next) {
+        return getNext(object, null, next, ObjectUtils::nonNull);
+    }
+
+
+    //------------------------------------ getOrDefault
+
+
+    /**
+     * 根据条件断定 判断 返回 原值 还是 默认值
+     * <p> 如果 {@link Predicate#test(Object)}  断定成功 返回 value, 否则返回 defaultValue</p>
+     *
+     * @param value        原值
+     * @param defaultValue 默认值函数
+     * @param predicate    断定条件
+     * @param <T>          操作类型
+     * @return 返回处理后的值
+     */
+    public static <T> T getOrDefault(T value, Supplier<T> defaultValue, Predicate<T> predicate) {
+//        getNext(value, x -> defaultValue, predicate);
+        return predicate.test(value) ? value : defaultValue.get();
     }
 
     /**
      * 如果为null 则返回默认值
+     * <p> 等价于 {@code getOrDefault(value,defaultValue,ObjectUtils::nonNull)}</p>
+     *
+     * @param value        原值
+     * @param defaultValue 默认值函数
+     * @param <T>          值类型
+     * @return 判断后的值
+     */
+    public static <T> T getOrDefault(T value, Supplier<T> defaultValue) {
+        return getOrDefault(value, defaultValue, ObjectUtils::nonNull);
+    }
+
+    /**
+     * 根据条件断定 判断 返回 原值 还是 默认值
+     * <p> 如果 {@link Predicate#test(Object)}  断定成功 返回 value, 否则返回 defaultValue</p>
+     * <p> 等价于 {@code getOrDefault(value, () -> defaultValue, predicate)}</p>
+     *
+     * @param value        原值
+     * @param predicate    断定条件
+     * @param defaultValue 默认值
+     * @param <T>          操作类型
+     * @return 返回处理后的值
+     */
+    public static <T> T getOrDefault(T value, Predicate<T> predicate, T defaultValue) {
+        return getOrDefault(value, () -> defaultValue, predicate);
+    }
+
+    /**
+     * 如果为null 则返回默认值
+     * <p> 等价于 {@code getOrDefault(value, ObjectUtils::nonNull, defaultValue)}</p>
+     *
+     * @param value        原值
+     * @param defaultValue 默认值
+     * @param <T>          值类型
+     * @return 判断后的值
+     */
+    public static <T> T getOrDefault(T value, T defaultValue) {
+        return getOrDefault(value, ObjectUtils::nonNull, defaultValue);
+    }
+
+    /**
+     * 如果为 Empty 则返回默认值
+     * <p> 等价于 {@code getOrDefault(list, ObjectUtils::nonEmpty, defaultValue)}</p>
      *
      * @param list         原值
      * @param defaultValue 默认值
      * @param <T>          值类型
      * @return 判断后的值
      */
-    public static <T> List<T> getOrDefault(List<T> list, List<T> defaultValue) {
-        return nonNull(list) ? list : defaultValue;
+    public static <T> List<T> getEmptyDefault(List<T> list, List<T> defaultValue) {
+        return getOrDefault(list, ObjectUtils::nonEmpty, defaultValue);
     }
 
     /**
      * 如果为null 则返回默认值
+     * <p> 等价于 {@code getOrDefault(array, ObjectUtils::nonEmpty, defaultValue)}</p>
      *
      * @param array        原值
      * @param defaultValue 默认值
      * @param <T>          值类型
      * @return 判断后的值
      */
-    public static <T> T[] getOrDefault(T[] array, T[] defaultValue) {
-        return nonNull(array) ? array : defaultValue;
+    public static <T> T[] getEmptyDefault(T[] array, T[] defaultValue) {
+        return getOrDefault(array, ObjectUtils::nonEmpty, defaultValue);
     }
 
     /**
      * 如果为null 则返回默认值
+     * <p> 等价于 {@code getOrDefault(set, ObjectUtils::nonEmpty, defaultValue)}</p>
      *
      * @param set          原值
      * @param defaultValue 默认值
      * @param <T>          值类型
      * @return 判断后的值
      */
-    public static <T> Set<T> getOrDefault(Set<T> set, Set<T> defaultValue) {
-        return nonNull(set) ? set : defaultValue;
+    public static <T> Set<T> getEmptyDefault(Set<T> set, Set<T> defaultValue) {
+        return getOrDefault(set, ObjectUtils::nonEmpty, defaultValue);
     }
 
 
     /**
      * 如果为null 则返回默认值
+     * <p> 等价于 {@code getOrDefault(map, ObjectUtils::nonEmpty, defaultValue)}</p>
      *
      * @param map          原值
      * @param defaultValue 默认值
@@ -280,8 +400,8 @@ public class ObjectUtils {
      * @param <V>          值类型
      * @return 判断后的值
      */
-    public static <K, V> Map<K, V> getOrDefault(Map<K, V> map, Map<K, V> defaultValue) {
-        return nonNull(map) ? map : defaultValue;
+    public static <K, V> Map<K, V> getEmptyDefault(Map<K, V> map, Map<K, V> defaultValue) {
+        return getOrDefault(map, ObjectUtils::nonEmpty, defaultValue);
     }
 
 
@@ -328,77 +448,60 @@ public class ObjectUtils {
     }
 
 
-//----------------------------------- 对象反射工具函数
+    public static <T> Object clone(T o) {
+        T result = ArrayUtil.clone(o);
+        result = isNull(result) ? (T) cloneByCloneable(o) : result;
+        result = isNull(result) ? (T) cloneByStream(o) : result;
+        return result;
+    }
 
     /**
-     * 根据属性名获取属性值
+     * 序列化克隆 , 浅复制,
+     * <p>执行 clone 方法</p>
      *
-     * @param fieldName 属性名
-     * @param o         待取值对象
-     * @return 返回属性值
+     * @param o 目标对象 需要继承{@link Cloneable}
+     * @return 复制对象
+     * <li>如果目标对象没有继承 {@link Cloneable} 则 返回空</li>
+     * <li>clone异常返回null</li>
+     * <li>目标类为 null 返回null</li>
      */
-    private static Object getFieldValueByName(String fieldName, Object o) {
-        try {
-            String firstLetter = fieldName.substring(0, 1).toUpperCase();
-            String getter = "get" + firstLetter + fieldName.substring(1);
-            Method method = o.getClass().getMethod(getter);
-            return method.invoke(o);
-        } catch (Exception e) {
+    public static <T> Object cloneByCloneable(T o) {
+        if (isNull(o) || !(o instanceof Cloneable)) {
             return null;
         }
-    }
-
-    /**
-     * 获取属性名数组
-     *
-     * @param o 待取值对象
-     * @return 属性名数组
-     */
-    private static String[] getFiledName(Object o) {
-        Field[] fields = o.getClass().getDeclaredFields();
-        String[] fieldNames = new String[fields.length];
-        for (int i = 0; i < fields.length; i++) {
-// 属性类型
-//            System.out.println(fields[i].getType());
-            fieldNames[i] = fields[i].getName();
-        }
-        return fieldNames;
+        return ReflectUtils.invoke(o, "clone");
     }
 
 
     /**
-     * 获取属性类型(type)，属性名(name)，属性值(value)的map组成的list
+     * 序列化克隆 , 深复制
      *
-     * @param o 待取值对象
-     * @return 属性信息集合
+     * @param o 目标对象 需要继承{@link Serializable}
+     * @return 复制对象
+     * <li>如果目标对象没有继承 {@link Serializable} 则 返回空</li>
+     * <li>序列化异常返回null</li>
+     * <li>目标类为 null 返回null</li>
      */
-    public static List<Map<String, Object>> getFiledInfo(Object o) {
-        Field[] fields = o.getClass().getDeclaredFields();
-        List<Map<String, Object>> list = new ArrayList<>();
-        Map<String, Object> infoMap;
-        for (Field field : fields) {
-            infoMap = new HashMap<>(3);
-            infoMap.put("type", field.getType().toString());
-            infoMap.put("name", field.getName());
-            infoMap.put("value", getFieldValueByName(field.getName(), o));
-            list.add(infoMap);
+    public static <T> Object cloneByStream(T o) {
+        if (isNull(o) || !(o instanceof Serializable)) {
+            return null;
         }
-        return list;
-    }
-
-    /**
-     * 获取对象的所有属性值，返回一个对象数组
-     *
-     * @param o 待取值对象
-     * @return 字段值数组
-     */
-    public static Object[] getFiledValues(Object o) {
-        String[] fieldNames = getFiledName(o);
-        Object[] value = new Object[fieldNames.length];
-        for (int i = 0; i < fieldNames.length; i++) {
-            value[i] = getFieldValueByName(fieldNames[i], o);
+        //将对象写入流中
+        ByteArrayOutputStream bao = new ByteArrayOutputStream();
+        ObjectOutputStream oos;
+        try {
+            oos = new ObjectOutputStream(bao);
+            oos.writeObject(o);
+            //将对象从流中取出
+            ByteArrayInputStream bis = new ByteArrayInputStream(bao.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            oos.close();
+            ois.close();
+            return ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return value;
+        return null;
     }
-
 }
+

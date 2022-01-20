@@ -136,9 +136,9 @@ public class ArrayUtil extends PrimitiveArrayUtil {
     /**
      * 返回数组中第一个匹配规则的值
      *
-     * @param <T>     数组元素类型
+     * @param <T>       数组元素类型
      * @param predicate 匹配接口，实现此接口自定义匹配规则
-     * @param array   数组
+     * @param array     数组
      * @return 非空元素，如果不存在非空元素或数组为空，返回{@code null}
      * @since 3.0.7
      */
@@ -171,6 +171,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
 
 
     // ---------------------------------------------------------------------- 翻转数组 reverse
+
     /**
      * 翻转数组, 不覆盖原数组
      *
@@ -191,11 +192,11 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 翻转后的数组
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] reverse( T[] array, boolean cover) {
+    public static <T> T[] reverse(T[] array, boolean cover) {
         if (isEmpty(array)) {
             return (T[]) new Object[0];
         }
-        T[] clone = cover ? array : array.clone();
+        T[] clone = cover ? array : copy(array, array.length);
         List<T> list = Arrays.asList(clone);
         Collections.reverse(list);
         return list.toArray(clone);
@@ -220,7 +221,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
                     .filter(ObjectUtils::nonEmpty)
                     .collect(Collectors.summarizingInt(Array::getLength))
                     .getSum();
-            result = Arrays.copyOf(first, totalLength);
+            result = copy(first, totalLength);
             for (T[] array : rest) {
                 if (ObjectUtils.nonEmpty(array)) {
                     System.arraycopy(array, 0, result, offset, array.length);
@@ -230,5 +231,85 @@ public class ArrayUtil extends PrimitiveArrayUtil {
         }
         return result;
     }
+
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>当且仅当指定长度大于原始数组的长度时，此类索引才会存在。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     *
+     * @param original  要复制的数组
+     * @param newLength 要返回的副本的长度
+     * @param <T>       数组中对象的类
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static <T> T[] copy(T[] original, int newLength) {
+        return Arrays.copyOf(original, newLength);
+    }
+
+    /**
+     * <p>复制指定的数组，截断或填充空值（如有必要），使副本具有指定的长度。 </p>
+     * <p>对于在原始数组和副本中都有效的所有索引，这两个数组将包含相同的值。</p>
+     * <p>对于在副本中有效但在原始副本中无效的任何索引，副本将包含null 。 </p>
+     * <p>结果数组与原始数组的类完全相同。</p>
+     * <p>如果原始值是 null 或者 空数组, 则返回 null</p>
+     *
+     * @param original 要复制的数组
+     * @param <T>      数组中对象的类
+     * @return 原始数组的副本，被截断或用空值填充以获得指定的长度
+     */
+    public static <T> T[] copy(T[] original) {
+        if (isEmpty(original)) {
+            return null;
+        }
+        return copy(original, original.length);
+    }
+
+
+    /**
+     * 克隆数组
+     *
+     * @param <T>   数组元素类型
+     * @param array 被克隆的数组
+     * @return 新数组
+     */
+    public static <T> T[] clone(T[] array) {
+        if (array == null) {
+            return null;
+        }
+        return array.clone();
+    }
+
+    /**
+     * 克隆数组，如果非数组返回{@code null}
+     *
+     * @param <T> 数组元素类型
+     * @param obj 数组对象
+     * @return 克隆后的数组对象
+     */
+    public static <T> T clone(final T obj) {
+        if (null == obj) {
+            return null;
+        }
+        if (isArray(obj)) {
+            final Object result;
+            final Class<?> componentType = obj.getClass().getComponentType();
+            if (componentType.isPrimitive()) {
+                // 原始类型
+                int length = Array.getLength(obj);
+                result = Array.newInstance(componentType, length);
+                while (length-- > 0) {
+                    Array.set(result, length, Array.get(obj, length));
+                }
+            } else {
+                result = ((Object[]) obj).clone();
+            }
+            return (T) result;
+        }
+        return null;
+    }
+
 
 }
