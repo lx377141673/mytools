@@ -10,11 +10,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
+ * 数据库操作工具类接口
+ *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common.utils.database
  * @date 2021/3/27 14:40
- * @Description No Description
  */
 public interface DbUtils {
 

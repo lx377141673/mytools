@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.alibaba.fastjson.serializer.SimpleDateFormatSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -62,11 +60,16 @@ CONFIG.put(java.util.Date.class, new JSONLibDataFormatSerializer());
 使用和json-lib兼容的日期输出格式
 CONFIG.put(java.sql.Date.class, new JSONLibDataFormatSerializer());
  */
-        String dateFormat = "yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormatSerializer simpleDateFormatSerializer = new SimpleDateFormatSerializer(dateFormat);
-        // 配置 时间类型输出格式
-        config.put(Date.class, simpleDateFormatSerializer);
-        config.put(java.sql.Date.class, simpleDateFormatSerializer);
+//        String dateFormat = "yyyy-MM-dd HH:mm:ss";
+//
+//        SimpleDateFormatSerializer simpleDateFormatSerializer = new SimpleDateFormatSerializer(dateFormat);
+//
+//
+//
+//        // 配置 时间类型输出格式
+//        config.put(Date.class, simpleDateFormatSerializer);
+//        config.put(java.sql.Date.class, simpleDateFormatSerializer);
+
     }
 
     public static SerializerFeature[] getFastJsonFeatures() {

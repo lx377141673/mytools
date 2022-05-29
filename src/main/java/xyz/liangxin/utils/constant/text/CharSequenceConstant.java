@@ -29,7 +29,7 @@ public class CharSequenceConstant {
     /**
      * 字符串常量：制表符 {@code "\t"}
      */
-    public static final String STR_TAB = "	";
+    public static final String STR_TAB = "\u0009";
 
     /**
      * 字符串常量：点 {@code "."}
@@ -46,6 +46,10 @@ public class CharSequenceConstant {
      * 字符串常量：斜杠 {@code "/"}
      */
     public static final String STR_SLASH = "/";
+    /**
+     * 字符串常量：双斜杠 {@code "//"}
+     */
+    public static final String STR_DOUBLE_SLASH = "//";
 
     /**
      * 字符串常量：反斜杠 {@code "\\"}
@@ -123,6 +127,32 @@ public class CharSequenceConstant {
      */
     public static final String STR_UNKNOWN = "unknown";
 
+    /**
+     * 字符串常量：与符号 {@code "&"}
+     */
+    public static final String STR_AMP = "&;";
+
+
+    /**
+     * 字符串常量：空 JSON {@code "{}"}
+     */
+    public static final String STR_EMPTY_JSON = "{}";
+
+
+    /**
+     * 字符串常量：加号 {@code "+"}
+     */
+    public static final String STR_ADD = "+";
+
+    /**
+     * 字符串常量：等于号 {@code "="}
+     */
+    public static final String STR_EQUAL = "=";
+
+    /**
+     * 字符串常量：问号 {@code "?"}
+     */
+    public static final String STR_QUESTION = "?";
 
 
     /**
@@ -155,10 +185,6 @@ public class CharSequenceConstant {
      */
     public static final String STR_HTML_GT = "&gt;";
 
-    /**
-     * 字符串常量：空 JSON {@code "{}"}
-     */
-    public static final String STR_EMPTY_JSON = "{}";
 
 
 }

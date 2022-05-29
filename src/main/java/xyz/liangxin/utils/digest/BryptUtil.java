@@ -4,12 +4,9 @@ import java.security.SecureRandom;
 
 /**
  * Brypt 加密工具类
- *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common.uitls.digest
  * @date 2021/4/13 5:15
- * @Description Brypt 加密工具类
  */
 public class BryptUtil {
 

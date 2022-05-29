@@ -192,12 +192,36 @@ public class CalculateUtils {
     /**
      * 加法
      *
+     * @param num1      数值1
+     * @param num2      数值2
+     * @param precision 数据处理精度位数  null 则不处理
+     * @return 结果值根据指定精度保留小数位
+     */
+    public static double add(double num1, double num2, Integer precision) {
+        return calculation(num1, num2, OperatorsEnum.ADD, precision);
+    }
+
+    /**
+     * 加法
+     *
      * @param num1 数值1
      * @param num2 数值2
      * @return 结果值默认四舍五入, 保留两位小数
      */
     public static double add(double num1, double num2) {
-        return calculation(num1, num2, OperatorsEnum.ADD, 2);
+        return add(num1, num2, 2);
+    }
+
+    /**
+     * 减法
+     *
+     * @param num1      数值1
+     * @param num2      数值2
+     * @param precision 数据处理精度位数  null 则不处理
+     * @return 结果值根据指定精度保留小数位
+     */
+    public static double subtract(double num1, double num2, Integer precision) {
+        return calculation(num1, num2, OperatorsEnum.SUBTRACT, precision);
     }
 
     /**
@@ -208,7 +232,19 @@ public class CalculateUtils {
      * @return 结果值默认四舍五入, 保留两位小数
      */
     public static double subtract(double num1, double num2) {
-        return calculation(num1, num2, OperatorsEnum.SUBTRACT, 2);
+        return subtract(num1, num2, 2);
+    }
+
+    /**
+     * 乘法
+     *
+     * @param num1      数值1
+     * @param num2      数值2
+     * @param precision 数据处理精度位数  null 则不处理
+     * @return 结果值根据指定精度保留小数位
+     */
+    public static double multiply(double num1, double num2, Integer precision) {
+        return calculation(num1, num2, OperatorsEnum.MULTIPLY, precision);
     }
 
     /**
@@ -219,7 +255,19 @@ public class CalculateUtils {
      * @return 结果值默认四舍五入, 保留两位小数
      */
     public static double multiply(double num1, double num2) {
-        return calculation(num1, num2, OperatorsEnum.MULTIPLY, 2);
+        return multiply(num1, num2, 2);
+    }
+
+    /**
+     * 除法
+     *
+     * @param num1      被除数
+     * @param num2      除数
+     * @param precision 数据处理精度位数  null 则不处理
+     * @return 结果值根据指定精度保留小数位
+     */
+    public static double divide(double num1, double num2, Integer precision) {
+        return calculation(num1, num2, OperatorsEnum.DIVIDE, precision);
     }
 
     /**
@@ -230,7 +278,7 @@ public class CalculateUtils {
      * @return 结果值默认四舍五入, 保留两位小数
      */
     public static double divide(double num1, double num2) {
-        return calculation(num1, num2, OperatorsEnum.DIVIDE, 2);
+        return divide(num1, num2, 2);
     }
 
 }

@@ -9,9 +9,7 @@ import xyz.liangxin.utils.constant.text.CharConstant;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.utils
  * @date 2021/11/7 18:40
- * @Description 操作字符串的各种工具函数
  */
 public class StringUtils extends CharSequenceUtil {
 

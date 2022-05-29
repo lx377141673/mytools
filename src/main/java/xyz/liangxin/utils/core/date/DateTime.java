@@ -17,14 +17,14 @@ public class DateTime extends Date {
     private static final long serialVersionUID = -5395712593979185936L;
 
     /**
-    /**
+     * /**
      * 是否可变对象
      */
-    private boolean mutable = true;
+    private final boolean mutable = true;
     /**
      * 一周的第一天，默认是周一， 在设置或获得 WEEK_OF_MONTH 或 WEEK_OF_YEAR 字段时，Calendar 必须确定一个月或一年的第一个星期，以此作为参考点。
      */
-    private  WeekEnum firstDayOfWeek = WeekEnum.MONDAY;
+    private final WeekEnum firstDayOfWeek = WeekEnum.MONDAY;
 
     /**
      * 时区

@@ -7,10 +7,8 @@ import xyz.liangxin.utils.constant.text.CharConstant;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.utils.core
  * @link cn.hutool.core.util.CharUtil
  * @date 2021/11/9 19:36
- * @Description 字符工具类
  */
 public class CharUtil extends CharConstant {
 

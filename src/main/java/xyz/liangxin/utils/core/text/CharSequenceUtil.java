@@ -9,9 +9,7 @@ import xyz.liangxin.utils.core.array.ArrayUtil;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.utils.core.text
  * @date 2021/11/9 20:40
- * @Description {@link CharSequence} 相关工具类封装
  */
 public class CharSequenceUtil extends CharSequenceConstant {
 

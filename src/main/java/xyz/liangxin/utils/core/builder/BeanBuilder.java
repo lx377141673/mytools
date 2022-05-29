@@ -16,9 +16,7 @@ import java.util.function.Supplier;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common.uitls
  * @date 2021/4/29 15:40
- * @Description Bean  Builder 模式构建器
  */
 public class BeanBuilder<T> {
     private static final Logger logger = LoggerFactory.getLogger(BeanBuilder.class);

@@ -1,9 +1,10 @@
 package xyz.liangxin.utils.database;
 
-import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.liangxin.utils.core.ReflectUtils;
 import xyz.liangxin.utils.core.text.CharSequenceUtil;
+import xyz.liangxin.utils.json.JsonUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,11 +38,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * JDBC 工具类
+ *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common.utils.database
  * @date 2021/3/27 14:41
- * @Description JDBC 工具类
  */
 public class JdbcUtils implements DbUtils, Serializable {
 
@@ -110,16 +111,6 @@ public class JdbcUtils implements DbUtils, Serializable {
         return JdbcUtilsInstance.JDBC_UTILS;
     }
 
-    /**
-     * 对象转换成 JSON 字符串
-     * 使用了 fastjson
-     *
-     * @param params 待转换的对象
-     * @return json 字符串
-     */
-    private static String toJsonString(Object params) {
-        return JSON.toJSONString(params);
-    }
 
     /**
      * 将将每一行的结果存储为 Map , 并保存在 集合中返回
@@ -211,8 +202,8 @@ public class JdbcUtils implements DbUtils, Serializable {
             List<T> list = new ArrayList<>();
             try {
                 list = resultSetToClassObject(c, rs);
-            } catch (SQLException | IllegalAccessException | InstantiationException | InvocationTargetException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException | IllegalAccessException | InvocationTargetException throwable) {
+                throwable.printStackTrace();
             }
             return list;
         }, sql, params);
@@ -285,7 +276,7 @@ public class JdbcUtils implements DbUtils, Serializable {
             }
 
             logger.debug(JDBC_SQL_LOG, sql);
-            logger.debug(JDBC_PARAMS_LOG, toJsonString(params));
+            logger.debug(JDBC_PARAMS_LOG, JsonUtils.toJSONString(params));
         } catch (SQLException e) {
             connection.rollback();
             throw e;
@@ -372,8 +363,8 @@ public class JdbcUtils implements DbUtils, Serializable {
             }
 
             logger.debug(JDBC_SQL_LOG, callSql);
-            logger.debug("JDBC_params-input : {}", toJsonString(input));
-            logger.debug("JDBC_params-output: {}", toJsonString(output));
+            logger.debug("JDBC_params-input : {}", JsonUtils.toJSONString(input));
+            logger.debug("JDBC_params-output: {}", JsonUtils.toJSONString(output));
 
             // 获取 存储过程执行中的结果集
             if (cstm.execute()) {
@@ -547,10 +538,9 @@ public class JdbcUtils implements DbUtils, Serializable {
      * @return 返回处理后的 List 结果
      * @throws SQLException              数据库操作错误
      * @throws IllegalAccessException    非法访问实例错误
-     * @throws InstantiationException    实例化异常
      * @throws InvocationTargetException 调用目标异常
      */
-    private <T> List<T> resultSetToClassObject(Class<T> c, ResultSet rs) throws SQLException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    private <T> List<T> resultSetToClassObject(Class<T> c, ResultSet rs) throws SQLException, IllegalAccessException, InvocationTargetException {
 
         List<T> list = new ArrayList<>();
 
@@ -562,7 +552,7 @@ public class JdbcUtils implements DbUtils, Serializable {
 
         while (rs.next()) {
             // 初始化 待填充的对象模型
-            T t = c.newInstance();
+            T t = ReflectUtils.newInstance(c);
             // 循环遍历 所有列
             for (int i = 0; i < metaData.getColumnCount(); i++) {
                 // 获取当前列的列名

@@ -531,4 +531,14 @@ public class ReflectUtils {
     }
 
 
+    //-------------------------------------- 对象反射 初始化
+    public static <T> T newInstance(Class<T> clazz) {
+        try {
+            return clazz.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

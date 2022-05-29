@@ -3,7 +3,6 @@ package xyz.liangxin.utils.constant.text;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
-import java.util.Set;
 
 /**
  * <p> 字符编码常量
@@ -178,18 +177,6 @@ public class CharsetConstant {
             //ignore
         }
         CHARSET_GBK = charsetGbk;
-    }
-
-
-    public static void main(String[] args) {
-        Set<String> charsetNames = Charset.availableCharsets().keySet();
-        System.out.println("---The Number of jdk1.8's charset is " + charsetNames.size() + "---");
-
-        charsetNames.forEach(System.out::println);
-
-        Charset sjis = Charset.forName("MS949");
-        System.out.println(sjis.isRegistered());
-        System.out.println(sjis);
     }
 
 }

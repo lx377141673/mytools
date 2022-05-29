@@ -22,9 +22,9 @@ import java.util.stream.Stream;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common
+ *
  * @date 2021/4/11 13:05
- * @Description Web Utils
+
  */
 public class WebUtils extends CookieUtils {
 
@@ -82,15 +82,14 @@ public class WebUtils extends CookieUtils {
     public static String getServletRequestUrlParams(HttpServletRequest request) {
         StringBuffer sbUrlParams = request.getRequestURL();
         Enumeration<String> parNames = request.getParameterNames();
-
         if (parNames.hasMoreElements()) {
-            sbUrlParams.append("?");
+            sbUrlParams.append(StringUtils.STR_QUESTION);
             do {
                 String parName = parNames.nextElement();
                 try {
-                    sbUrlParams.append(parName).append("=")
+                    sbUrlParams.append(parName).append(StringUtils.STR_EQUAL)
                             .append(URLEncoder.encode(request.getParameter(parName), StandardCharsets.UTF_8.name()))
-                            .append("&");
+                            .append(StringUtils.STR_AMP);
                 } catch (UnsupportedEncodingException e) {
                     return "";
                 }
@@ -132,8 +131,8 @@ public class WebUtils extends CookieUtils {
      * @return 是否符合判断
      */
     public static boolean compareReferer(String referer, String trueUrl) {
-        String[] baseUrl = referer.split("/");
-        String refererUrl = baseUrl[0] + "//" + baseUrl[2];
+        String[] baseUrl = referer.split(StringUtils.STR_SLASH);
+        String refererUrl = baseUrl[0] + StringUtils.STR_DOUBLE_SLASH + baseUrl[2];
         return refererUrl.equals(trueUrl);
     }
 
@@ -204,7 +203,7 @@ public class WebUtils extends CookieUtils {
         Browser browser = ua.getBrowser();
         //获取操作系统对象
         OperatingSystem os = ua.getOperatingSystem();
-        return os.getDeviceType() + "-" + os.getName() + "-" + browser.getName();
+        return os.getDeviceType() + StringUtils.STR_DASHED + os.getName() + StringUtils.STR_DASHED + browser.getName();
     }
 
 

@@ -14,9 +14,7 @@ import java.util.zip.CRC32;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common.uitls.digest
  * @date 2021/4/12 17:05
- * @Description 获取文件摘要工具类
  */
 public class FileSafeCode {
 
@@ -35,7 +33,7 @@ public class FileSafeCode {
      *
      * @param file 等待获取摘要的文件
      * @return 返回 摘要码, 如果文件不存在 返回 null
-     * @throws IOException              文件操作异常
+     * @throws IOException 文件操作异常
      */
     public static String getMD5(File file) throws IOException {
         return MD5Utils.md5(file);

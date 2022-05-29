@@ -15,13 +15,13 @@ public class CharConstant {
     /**
      * 字符常量：制表符 {@code '\t'}
      */
-    public static final char CH_TAB = '	';
+    public static final char CH_TAB = '\u0009';
     /**
      * 字符常量：点 {@code '.'}
      */
     public static final char CH_DOT = '.';
     /**
-     * 字符常量：斜杠 {@code '/'}
+     * 字符常量：斜杠 / 除号 {@code '/'}
      */
     public static final char CH_SLASH = '/';
     /**
@@ -36,10 +36,6 @@ public class CharConstant {
      * 字符常量：换行符 {@code '\n'}
      */
     public static final char CH_LF = '\n';
-    /**
-     * 字符常量：减号（连接符） {@code '-'}
-     */
-    public static final char CH_DASHED = '-';
     /**
      * 字符常量：下划线 {@code '_'}
      */
@@ -96,4 +92,23 @@ public class CharConstant {
      * 字符常量:星号 / 乘法符号{@code '*'}
      */
     public static final char CH_MULTIPLY = '*';
+    /**
+     * 字符常量: 加号{@code '+'}
+     */
+    public static final char CH_ADD = '+';
+
+    /**
+     * 字符常量：减号（连接符） {@code '-'}
+     */
+    public static final char CH_DASHED = '-';
+
+    /**
+     * 字符常量：等于 {@code '='}
+     */
+    public static final char CH_EQUAL = '=';
+
+    /**
+     * 字符常量: 问号 {@code '?'}
+     */
+    public static final char CH_QUESTION = '?';
 }

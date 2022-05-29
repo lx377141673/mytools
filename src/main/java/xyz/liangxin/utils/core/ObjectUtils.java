@@ -26,9 +26,7 @@ import java.util.function.Supplier;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common.uitls
  * @date 2021/4/17 23:34
- * @Description Object 工具类
  */
 public class ObjectUtils {
 

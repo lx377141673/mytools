@@ -41,9 +41,9 @@ import java.util.TimeZone;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.springbootdemo.common.uitls.json
+ *
  * @date 2021/4/13 2:20
- * @Description No Description
+
  */
 public class JacksonUtils {
     private static final Logger logger = LoggerFactory.getLogger(JacksonUtils.class);
@@ -247,14 +247,14 @@ public class JacksonUtils {
      */
     public static Map<String, Object> parseMapDeeply(String json) {
         if (StringUtils.isEmpty(json)) {
-            return null;
+            return Collections.emptyMap();
         }
         try {
             return json2MapRecursion(json, OBJECT_MAPPER);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return null;
+        return Collections.emptyMap();
     }
 
     /**

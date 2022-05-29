@@ -11,9 +11,7 @@ import java.nio.charset.Charset;
  *
  * @author liangxin
  * @version V1.0
- * @Package xyz.liangxin.utils.core
  * @date 2021/11/9 20:04
- * @Description 字符集工具类
  */
 public class CharsetUtil extends CharsetConstant {
     private static final Logger logger = LoggerFactory.getLogger(CharsetUtil.class);

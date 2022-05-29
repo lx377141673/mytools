@@ -40,6 +40,7 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.liangxin.utils.core.ObjectUtils;
+import xyz.liangxin.utils.core.ReflectUtils;
 import xyz.liangxin.utils.core.text.StringUtils;
 import xyz.liangxin.utils.json.JsonUtils;
 
@@ -883,7 +884,8 @@ public class HttpClientUtils implements HttpUtilInterface {
      */
     public <T extends HttpRequestBase> T requestBuilder(String url, Class<T> clazz) {
         try {
-            T t = clazz.newInstance();
+            T t = ReflectUtils.newInstance(clazz);
+            if (ObjectUtils.isNull(t)) return null;
             t.setURI(new URI(verifyUrl(url)));
             return t;
         } catch (Exception e) {
