@@ -311,5 +311,20 @@ public class ArrayUtil extends PrimitiveArrayUtil {
         return null;
     }
 
+    /**
+     * 数组去重函数
+     * 如果参数数组为空 则返回原数组
+     *
+     * @param array 数组
+     * @param <T>   数组类型
+     * @return 去重数组
+     */
+    public static <T> T[] distinct(T[] array) {
+        if (isEmpty(array)) {
+            return array;
+        }
+        List<T> collect = Arrays.stream(array).distinct().collect(Collectors.toList());
+        return collect.toArray(Arrays.copyOf(array, collect.size()));
+    }
 
 }
