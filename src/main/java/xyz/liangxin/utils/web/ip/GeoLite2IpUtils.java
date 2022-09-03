@@ -50,7 +50,7 @@ public class GeoLite2IpUtils {
             database = GeoLite2IpUtils.class.getClassLoader().getResourceAsStream(GEOIP2_DB);
             setReader(database);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("加载 GeoIP2离线库失败", e);
         }
     }
 
@@ -99,9 +99,4 @@ public class GeoLite2IpUtils {
         return info;
     }
 
-
-    public static void test() {
-        IpInfo ipInfo = getIpInfo("219.142.145.158");
-        logger.info(ipInfo.toString());
-    }
 }

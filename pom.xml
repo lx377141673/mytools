@@ -6,7 +6,7 @@
 
     <groupId>xyz.liangxin.utils</groupId>
     <artifactId>project-utils</artifactId>
-    <version>1.1.4-SNAPSHOT</version>
+    <version>1.1.4.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>【项目工具包】project-utils</name>
@@ -17,6 +17,7 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <jackson.version>2.13.3</jackson.version>
+        <java-version>17</java-version>
     </properties>
 
     <dependencies>
@@ -41,12 +42,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.0-alpha5</version>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.0-alpha5</version>
+            <version>2.0.0</version>
         </dependency>
 
         <!-- http 客户端支持 -->
@@ -71,7 +72,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>20030203.000550</version>
+            <version>2.11.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
         <dependency>
@@ -89,6 +90,14 @@
             <version>3.0.1</version>
         </dependency>
 
+        <!-- 纯真IP 地址库 -->
+        <dependency>
+            <groupId>com.github.jarod</groupId>
+            <artifactId>qqwry-java</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+
+
         <!-- json工具-->
 
         <!-- json工具 : FastJson2 -->
@@ -96,7 +105,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>2.0.3.graal</version>
+            <version>2.0.12.graal</version>
         </dependency>
 
         <!-- json工具: Jackson -->
@@ -129,7 +138,7 @@
         <dependency>
             <groupId>com.fasterxml.woodstox</groupId>
             <artifactId>woodstox-core</artifactId>
-            <version>6.2.8</version>
+            <version>6.3.1</version>
         </dependency>
         <!-- Java 8 新功能-->
         <dependency>
@@ -161,14 +170,14 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.14.3</version>
+            <version>1.15.3</version>
         </dependency>
 
         <!-- JWT 加密 -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>3.19.2</version>
+            <version>4.0.0</version>
         </dependency>
 
 
@@ -176,9 +185,19 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <scope>provided</scope>
-            <version>5.8.3</version>
+            <scope>runtime</scope>
+            <version>5.8.5</version>
         </dependency>
+
+
+        <!-- idea UI 重绘包 -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>2.4</version>
+            <scope>runtime</scope>
+        </dependency>
+
 
     </dependencies>
 
