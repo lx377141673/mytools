@@ -15,14 +15,6 @@ import java.awt.*;
  */
 public class WindowToolkitTest {
 
-    public static void main(String[] args) {
-
-        FlatDarkLaf.setup();
-        JFrame jFrame = new JFrame("test");
-        jFrame.setPreferredSize(new Dimension(600, 400));
-        jFrame.setVisible(true);
-        jFrame.pack();
-    }
 
     @Test
     public void IdeaUI() {
@@ -31,6 +23,15 @@ public class WindowToolkitTest {
         jFrame.pack();
         jFrame.setVisible(true);
 
+    }
+
+    @Test
+    public void IdeaUI2() {
+        FlatDarkLaf.setup();
+        JFrame jFrame = new JFrame("test");
+        jFrame.setPreferredSize(new Dimension(600, 400));
+        jFrame.setVisible(true);
+        jFrame.pack();
     }
 
 

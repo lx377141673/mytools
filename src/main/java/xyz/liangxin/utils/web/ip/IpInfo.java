@@ -1,11 +1,7 @@
 package xyz.liangxin.utils.web.ip;
 
 
-import com.maxmind.geoip2.record.City;
-import com.maxmind.geoip2.record.Continent;
-import com.maxmind.geoip2.record.Country;
-import com.maxmind.geoip2.record.Location;
-import com.maxmind.geoip2.record.Subdivision;
+import com.maxmind.geoip2.record.*;
 
 /**
  * IP 信息包装实体
@@ -55,11 +51,6 @@ public class IpInfo {
      * 国家代码
      */
     private String countryCode;
-
-    /**
-     * 是否是欧盟
-     */
-    private boolean isInEuropeanUnion;
 
     /**
      * 省份名
@@ -159,14 +150,6 @@ public class IpInfo {
         this.countryCode = countryCode;
     }
 
-    public boolean isInEuropeanUnion() {
-        return isInEuropeanUnion;
-    }
-
-    public void setInEuropeanUnion(boolean inEuropeanUnion) {
-        isInEuropeanUnion = inEuropeanUnion;
-    }
-
     public String getProvinceName() {
         return provinceName;
     }
@@ -253,7 +236,6 @@ public class IpInfo {
         this.countryName = country.getNames().get(LANGUAGE);
         this.countryNameEn = country.getName();
         this.countryCode = country.getIsoCode();
-        this.isInEuropeanUnion = country.isInEuropeanUnion();
     }
 
 
@@ -298,7 +280,6 @@ public class IpInfo {
                 ", countryName='" + countryName + '\'' +
                 ", countryNameEn='" + countryNameEn + '\'' +
                 ", countryCode='" + countryCode + '\'' +
-                ", isInEuropeanUnion=" + isInEuropeanUnion +
                 ", provinceName='" + provinceName + '\'' +
                 ", provinceNameEn='" + provinceNameEn + '\'' +
                 ", provinceCode='" + provinceCode + '\'' +

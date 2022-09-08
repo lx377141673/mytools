@@ -17,15 +17,14 @@ import java.net.InetAddress;
  * @author liangxin
  * @version V1.0
  * @date 2021/4/27 21:27
- * @since
- * <p>
- *  IP 定位工具类 ，基于 geolite2-city 离线数据库 version-2021/12/07
- *  maven 依赖
- *  <dependency>
- *  <groupId>com.maxmind.geoip2</groupId>
- *  <artifactId>geoip2</artifactId>
- *  <version>2.16.1</version>
- *  </dependency>
+ * @since <p>
+ * IP 定位工具类 ，基于 GeoLite2-city 离线数据库 version-2022.09.02
+ * maven 依赖
+ * <dependency>
+ * <groupId>com.maxmind.geoip2</groupId>
+ * <artifactId>geoip2</artifactId>
+ * <version>3.0.1</version>
+ * </dependency>
  * </p>
  */
 public class GeoLite2IpUtils {

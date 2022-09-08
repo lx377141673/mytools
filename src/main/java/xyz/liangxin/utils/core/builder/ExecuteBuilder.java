@@ -34,7 +34,7 @@ public class ExecuteBuilder<T> {
         this.t = t;
     }
 
-    public ExecuteBuilder(T t, boolean showError) {
+    private ExecuteBuilder(T t, boolean showError) {
         this.t = t;
         this.showError = showError;
     }
